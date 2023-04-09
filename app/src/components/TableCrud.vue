@@ -29,9 +29,12 @@
         <td>{{ item.email }}</td>
         <td>{{ item.gender }}</td>
         <td>{{ item.status }}</td>
-        <td>
-          <v-btn density="compact" icon="fa-solid fa-trash-can" :style="{ color: 'red' }" size="x-small"
+        <td class="">
+          <v-btn density="compact" icon="fa-solid fa-trash-can mr-5" :style="{ color: 'red' }" size="x-small"
             @click="deleteUser(item.id)">
+          </v-btn>
+          <v-btn density="compact" icon="fa-solid fa-pencil" :style="{ color: 'red' }" size="x-small"
+            @click="editUser(item.id)">
           </v-btn>
         </td>
       </tr>
@@ -46,15 +49,19 @@
 import postsService from '@/services/posts'
 import { onMounted, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
+import { useRouter, useRoute } from 'vue-router';
 
 export default {
   name: 'TableCrud',
 
   setup() {
+    const router = useRouter;
+    const route = useRoute()
 
     const users = ref([]);
     const { list, remove } = postsService()
     const snackbar = useSnackbar();
+    console.log(route.params.id);
 
     onMounted(() => {
       getUsers()
@@ -79,6 +86,17 @@ export default {
       }
     }
 
+    const editUser = (id) => {
+      router.push({ name: 'cadastrar', params: { id } })
+      // router.push({
+      //   name: 'cadastrar',
+      //   id: {
+      //     ...route.id,
+      //     ...id,
+      //   },
+      // })
+    }
+    
     function successMessage() {
       snackbar.add({
         type: 'success',
@@ -93,7 +111,7 @@ export default {
       })
     }
 
-    return { users, deleteUser, successMessage, errorMessage}
+    return { users, deleteUser, successMessage, errorMessage, editUser}
   },
 
 }
