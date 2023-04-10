@@ -44,10 +44,12 @@
             </span>
           </v-col>
         </v-row>
-        <v-btn color="red" variant="flat" size="large" to="/"> Cancelar
+        <v-row class="d-flex justify-space-between">
+        <v-btn color="blue" variant="outlined" size="large" to="/"> Cancelar
         </v-btn>
-        <v-btn type="submit" color="primary" variant="flat" size="large"> Salvar
+        <v-btn type="submit" color="blue" variant="flat" size="large"> Salvar
         </v-btn>
+      </v-row>
       </v-container>
     </v-form>
   </div>

@@ -1,9 +1,11 @@
 <template>
-  <nav>
-    <router-link to="/">Usuários</router-link> |
+  <v-container>
+  <nav class="d-flex justify-space-between">
+    <router-link to="/">Usuários</router-link>
     <router-link to="/cadastrar">Cadastrar</router-link>
   </nav>
   <router-view/>
+</v-container>
 </template>
 
 <style>
@@ -25,6 +27,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #2196F3;
 }
 </style>

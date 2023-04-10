@@ -10,6 +10,15 @@ export default function useApi(url) {
         }
     }
 
+    const search = async (words) => {
+        try {
+            const { data } = await api.get(`${url}?name=${words}`)
+            return data
+        } catch (error) {
+            throw new Error(error)
+        }
+    }    
+
     const getById = async (id) => {
         try {
             const { data } = await api.get(`${url}/${id}`)
@@ -51,6 +60,7 @@ export default function useApi(url) {
         post,
         update,
         remove,
-        getById
+        getById,
+        search
     }
 }
