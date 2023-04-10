@@ -23,23 +23,11 @@
         <v-row>
           <v-col>
             <div class="d-flex">
-            <input
-            id="true"
-            class="mr-2"
-            type="radio"
-            value="male"
-            v-model="form.gender"
-          />
-          <label for="true">Masculino</label>
-          <input
-            id="false"
-            class="mr-2"
-            type="radio"
-            value="female"
-            v-model="form.gender"
-          />
-          <label for="false">Feminino</label>
-        </div>
+              <input id="true" class="mr-2" type="radio" value="male" v-model="form.gender" />
+              <label for="true">Masculino</label>
+              <input id="false" class="mr-2" type="radio" value="female" v-model="form.gender" />
+              <label for="false">Feminino</label>
+            </div>
             <span class="d-flex justify-start text-red-lighten-1" v-for="(error, index) in v$.gender.$errors"
               :key="index">
               {{ error.$message }}
@@ -62,15 +50,15 @@
         </v-btn>
       </v-container>
     </v-form>
-    <h1>Radios: {{form.gender}}</h1>
   </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, maxLength, helpers } from '@vuelidate/validators'
 import postsService from '@/services/posts'
+import { useRoute, useRouter } from 'vue-router';
 
 
 export default {
@@ -78,9 +66,9 @@ export default {
 
   setup() {
 
-    const { post } = postsService();
-
-    const radioGroup = ref()
+    const { post, getById, update } = postsService();
+    const router = useRouter();
+    const route = useRoute();
 
     const form = ref({
       name: '',
@@ -102,13 +90,29 @@ export default {
 
     const v$ = useVuelidate(rules, form)
 
+    onMounted(async () => {
+      if (route.params.id) {
+        getUser(route.params.id)
+      }
+    })
+
+    const getUser = async (id) => {
+      try {
+        const response = await getById(id)
+        form.value = response.data
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     const submitForm = async () => {
       const isValid = await v$.value.$validate();
-      if (isValid) {
+      if (!form.value.id && isValid) {
         await post(form.value)
         alert("Cadastrado com sucesso!!!")
+        router.push({ name: 'home' })
       } else {
-        alert("Erro ao enviar o formulário")
+        await update(form.value)
       }
     }
 
@@ -116,7 +120,8 @@ export default {
       form,
       v$,
       submitForm,
-      radioGroup
+      router,
+      route,
     }
 
   }
@@ -124,6 +129,4 @@ export default {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

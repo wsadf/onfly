@@ -49,19 +49,18 @@
 import postsService from '@/services/posts'
 import { onMounted, ref } from 'vue';
 import { useSnackbar } from "vue3-snackbar";
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'TableCrud',
 
   setup() {
-    const router = useRouter;
-    const route = useRoute()
+
+    const router = useRouter();
 
     const users = ref([]);
     const { list, remove } = postsService()
     const snackbar = useSnackbar();
-    console.log(route.params.id);
 
     onMounted(() => {
       getUsers()
@@ -88,15 +87,8 @@ export default {
 
     const editUser = (id) => {
       router.push({ name: 'cadastrar', params: { id } })
-      // router.push({
-      //   name: 'cadastrar',
-      //   id: {
-      //     ...route.id,
-      //     ...id,
-      //   },
-      // })
     }
-    
+
     function successMessage() {
       snackbar.add({
         type: 'success',
@@ -111,7 +103,13 @@ export default {
       })
     }
 
-    return { users, deleteUser, successMessage, errorMessage, editUser}
+    return {
+      users,
+      deleteUser,
+      successMessage,
+      errorMessage,
+      editUser
+    }
   },
 
 }
