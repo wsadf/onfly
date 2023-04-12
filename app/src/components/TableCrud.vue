@@ -1,34 +1,42 @@
 <template>
   <!-- <input v-model="searchInput" placeholder="Pesquisar..." /> -->
   {{ meta }}
-  <div class="d-flex">
-    <v-text-field label="Pesquisar..." :append-inner-icon="'fa-solid fa-search'" @click:append-inner="filterInput()
-    " v-model="searchInput" class="mr-5">
-    </v-text-field>
-    <v-btn class="text-none" color="warning" variant="flat" size="x-large" prepend-icon="" @click="clearInput()">Limpar busca</v-btn>
+  <div class="d-flex mt-5">
+    <v-row>
+      <v-col cols="12" md="9" sm="12">
+        <v-text-field label="Pesquisar..." :append-inner-icon="'fa-solid fa-search'" @click:append-inner="filterInput()
+        " v-model="searchInput">
+        </v-text-field>
+
+      </v-col>
+      <v-col cols="12" md="3" sm="12">
+        <v-btn class="text-none" color="warning" variant="flat" size="x-large" prepend-icon="" @click="clearInput()">Limpar
+          busca</v-btn>
+      </v-col>
+    </v-row>
   </div>
   <!-- <v-btn density="default" variant="text" icon="fa-solid fa-search mr-5" :style="{ color: 'red' }" size="small"
     @click="filterInput()">
   </v-btn> -->
-  <v-table>
+  <v-table class="mb-5">
     <thead>
       <tr>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           ID
         </th>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           Nome
         </th>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           Email
         </th>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           Gênero
         </th>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           Status
         </th>
-        <th class="text-left">
+        <th class="text-left font-weight-bold">
           Ações
         </th>
       </tr>
@@ -51,20 +59,23 @@
       </tr>
     </tbody>
   </v-table>
-  <v-row class="mt-8">
-    <v-col>
-    <v-text-field type="number" label="Digite qual página deseja..." v-model="navPages" @blur="navPagesInput()"></v-text-field>
-  </v-col>
-  <v-col class="mt-2 d-flex justify-space-around">
-    <v-btn color="blue-darken-4" @click="primeiraPagina()">primeira</v-btn>
-    <v-btn color="blue-darken-4" @click="anteriorPagina()">anterior</v-btn>
-    <v-btn color="blue">{{ paginaAtual }}</v-btn>
-    <v-btn color="blue-darken-4" @click="proximaPagina()">proxima</v-btn>
-    <v-btn color="blue-darken-4" @click="ultimaPagina()">ultima</v-btn>
-  </v-col>
-  <v-col class="mt-3">
-    <p class="font-weight-bold">Total de páginas: {{ totalPaginas }}</p>
-  </v-col>
+  <v-row class="bts">
+    <v-col cols="12" md="12">
+      <v-btn class="mx-1 px-0" color="blue-darken-4" @click="primeiraPagina()">primeira</v-btn>
+      <v-btn class="mx-1 px-0" color="blue-darken-4" @click="anteriorPagina()">&lt;</v-btn>
+      <v-btn class="mx-1 px-0" color="blue">{{ paginaAtual }}</v-btn>
+      <v-btn class="mx-1 px-0" color="blue-darken-4" @click="proximaPagina()">></v-btn>
+      <v-btn class="mx-1 px-0" color="blue-darken-4" @click="ultimaPagina()">última</v-btn>
+    </v-col>
+    <v-col cols="12" md="6" sm="12">
+      <v-sheet width="220">
+    <v-text-field type="number" label="Digite qual página deseja..." v-model="navPages"
+      @blur="navPagesInput()"></v-text-field>
+    </v-sheet>
+</v-col>
+<v-col cols="12" md="6" sm="12">
+  <p class="font-weight-bold">Total de páginas: {{ totalPaginas }}</p>
+</v-col>
 </v-row>
   <vue3-snackbar top center dense :duration="4000">
   </vue3-snackbar>
@@ -114,17 +125,17 @@ export default {
     }
 
     const anteriorPagina = async () => {
-      if(paginaAtual.value >   1){
+      if (paginaAtual.value > 1) {
         paginaAtual.value--;
-      const { data } = await pagination(paginaAtual);
-      users.value = [];
-      users.value = data;
-       }
+        const { data } = await pagination(paginaAtual);
+        users.value = [];
+        users.value = data;
+      }
     }
 
     const proximaPagina = async () => {
       console.log(paginaAtual.value, totalPaginas.value)
-      if(paginaAtual.value <= (totalPaginas.value -1)){
+      if (paginaAtual.value <= (totalPaginas.value - 1)) {
         paginaAtual.value++;
         const { data } = await pagination(paginaAtual);
         users.value = [];
@@ -154,14 +165,14 @@ export default {
     },
 
       filterInput = async () => {
-          const { data } = await search(searchInput.value);
-          users.value = [];
-          users.value = data;
+        const { data } = await search(searchInput.value);
+        users.value = [];
+        users.value = data;
       }
 
-      function clearInput() {
-          getUsers();
-      }
+    function clearInput() {
+      getUsers();
+    }
 
     const deleteUser = async (id) => {
       try {
@@ -237,5 +248,9 @@ tbody tr:nth-of-type(odd) {
 
 .theme--light.v-data-table thead tr th {
   color: white;
+}
+.bts .v-btn{
+  text-transform: capitalize;
+  font-size: 12px;
 }
 </style>
