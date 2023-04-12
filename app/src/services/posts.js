@@ -1,7 +1,7 @@
 import useApi from "@/composables/UseApi";
 
 export default function postsService () {
-    const {list, post, update, remove, getById, search} = useApi('users')
+    const {list, post, update, remove, getById, search,pagination} = useApi('users')
 
     return {
         list,
@@ -9,6 +9,7 @@ export default function postsService () {
         update,
         remove,
         getById,
-        search
+        search,
+        pagination
     }
 }

@@ -1,11 +1,15 @@
 <template>
   <v-container>
-  <nav class="d-flex justify-space-between">
-    <router-link to="/">Usuários</router-link>
-    <router-link to="/cadastrar">Cadastrar</router-link>
-  </nav>
-  <router-view/>
-</v-container>
+      <v-btn href="/" color="blue-darken-4" dark class="ml-auto ma-3" v-on="on">
+        Lista de usuários
+        <v-icon class="ml-2">fa-solid fa-house</v-icon>
+      </v-btn>
+      <v-btn href="/cadastrar" color="blue-darken-4" dark class="ml-auto ma-3" v-on="on">
+        Cadastrar
+        <v-icon class="ml-2">fa-solid fa-user-plus</v-icon>
+      </v-btn>
+    <router-view />
+  </v-container>
 </template>
 
 <style>

@@ -22,11 +22,12 @@
         </v-row>
         <v-row>
           <v-col>
+            <label for="genero" class="font-weight-bold mx-5 d-flex align-start">Gênero:</label>
             <div class="d-flex">
-              <input id="true" class="mr-2" type="radio" value="male" v-model="form.gender" />
-              <label for="true">Masculino</label>
-              <input id="false" class="mr-2" type="radio" value="female" v-model="form.gender" />
-              <label for="false">Feminino</label>
+              <input id="male" class="mx-2" type="radio" value="male" v-model="form.gender" />
+              <label for="male">Masculino</label>
+              <input id="female" class="mx-4" type="radio" value="female" v-model="form.gender" />
+              <label for="female">Feminino</label>
             </div>
             <span class="d-flex justify-start text-red-lighten-1" v-for="(error, index) in v$.gender.$errors"
               :key="index">
@@ -36,15 +37,22 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-text-field outlined v-model="form.status" label="Status" required>
-            </v-text-field>
+            <label for="status" class="font-weight-bold mx-5 d-flex align-start">Status:</label>
+            <div class="d-flex">
+              <input id="activo" class="mx-4" type="radio" value="activo" v-model="form.status" />
+              <label for="activo">Ativo</label>
+              <input id="inactive" class="mx-4" type="radio" value="inactive" v-model="form.status" />
+              <label for="inactive">Inativo</label>
+            </div>
             <span class="d-flex justify-start text-red-lighten-1" v-for="(error, index) in v$.status.$errors"
               :key="index">
               {{ error.$message }}
             </span>
           </v-col>
+          <v-responsive width="100%"></v-responsive>
         </v-row>
         <v-row class="d-flex justify-space-between">
+          <v-divider class="pt-10 mt-10"></v-divider>
         <v-btn color="blue" variant="outlined" size="large" to="/"> Cancelar
         </v-btn>
         <v-btn type="submit" color="blue" variant="flat" size="large"> Salvar

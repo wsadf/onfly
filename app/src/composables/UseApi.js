@@ -1,6 +1,7 @@
 import api from '@/services/api';
 
 export default function useApi(url) {
+
     const list = async () => {
         try {
             const { data } = await api.get(url)
@@ -10,14 +11,24 @@ export default function useApi(url) {
         }
     }
 
-    const search = async (words) => {
+    const search = async (value) => {
         try {
-            const { data } = await api.get(`${url}?name=${words}`)
+            const { data } = await api.get(`${url}?name=${value}`)
+            console.log(data)
             return data
         } catch (error) {
             throw new Error(error)
         }
     }    
+
+    const pagination = async (page) => {
+        try {
+            const { data } = await api.get(`${url}?page=${page.value}`)
+            return data
+        } catch (error) {
+            throw new Error(error)
+        }
+    } 
 
     const getById = async (id) => {
         try {
@@ -61,6 +72,7 @@ export default function useApi(url) {
         update,
         remove,
         getById,
-        search
+        search,
+        pagination
     }
 }
