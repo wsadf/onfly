@@ -61,6 +61,8 @@
       </v-container>
     </v-form>
   </div>
+  <vue3-snackbar top center dense :duration="4000">
+  </vue3-snackbar>
 </template>
 <script>
 import { ref, onMounted } from 'vue';
@@ -69,6 +71,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, maxLength, helpers } from '@vuelidate/validators'
 import postsService from '@/services/posts'
 import { useRoute, useRouter } from 'vue-router';
+import { useSnackbar } from "vue3-snackbar";
 
 
 export default {
@@ -79,6 +82,7 @@ export default {
     const { post, getById, update } = postsService();
     const router = useRouter();
     const route = useRoute();
+    const snackbar = useSnackbar();
 
     const form = ref({
       name: '',
@@ -119,11 +123,18 @@ export default {
       const isValid = await v$.value.$validate();
       if (!form.value.id && isValid) {
         await post(form.value)
-        alert("Cadastrado com sucesso!!!")
+        successMessage()
         router.push({ name: 'home' })
       } else {
         await update(form.value)
       }
+    }
+
+    function successMessage() {
+      snackbar.add({
+        type: 'success',
+        text: 'Cadastrado com sucesso'
+      })
     }
 
     return {
@@ -132,6 +143,8 @@ export default {
       submitForm,
       router,
       route,
+      snackbar,
+      successMessage
     }
 
   }

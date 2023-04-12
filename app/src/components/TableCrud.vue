@@ -1,5 +1,4 @@
 <template>
-  <!-- <input v-model="searchInput" placeholder="Pesquisar..." /> -->
   {{ meta }}
   <div class="d-flex mt-5">
     <v-row>
@@ -15,9 +14,6 @@
       </v-col>
     </v-row>
   </div>
-  <!-- <v-btn density="default" variant="text" icon="fa-solid fa-search mr-5" :style="{ color: 'red' }" size="small"
-    @click="filterInput()">
-  </v-btn> -->
   <v-table class="mb-5">
     <thead>
       <tr>
@@ -116,12 +112,9 @@ export default {
 
     const primeiraPagina = async () => {
       paginaAtual.value = 1;
-      // if(paginaAtual >= 1){
       const { data } = await pagination(paginaAtual);
       users.value = [];
       users.value = data;
-      //  }
-      // console.log(paginaAtual)
     }
 
     const anteriorPagina = async () => {
@@ -145,12 +138,9 @@ export default {
 
     const ultimaPagina = async () => {
       paginaAtual.value = totalPaginas.value;
-      // if(paginaAtual >= 1){
       const { data } = await pagination(paginaAtual);
       users.value = [];
       users.value = data;
-      //  }
-      // console.log(paginaAtual)
     }
 
 
@@ -160,7 +150,7 @@ export default {
         users.value = data;
         totalPaginas.value = meta.pagination.pages;
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     },
 
